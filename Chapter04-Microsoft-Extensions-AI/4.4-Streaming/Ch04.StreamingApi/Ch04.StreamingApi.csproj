@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Section 4.4: streaming responses from an ASP.NET Core API with Server-Sent Events. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

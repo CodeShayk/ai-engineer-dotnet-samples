@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 3.6: versioned prompt files, a template renderer that fails loudly, and a prompt library. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Prompts\*.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

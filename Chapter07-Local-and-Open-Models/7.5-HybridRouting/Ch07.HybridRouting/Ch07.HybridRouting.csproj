@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 7.5: routing requests that contain personal or payment data to a local model. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

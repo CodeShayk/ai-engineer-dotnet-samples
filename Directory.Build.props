@@ -1,0 +1,28 @@
+<Project>
+
+  <!--
+    Settings shared by every project in the companion code.
+    Individual projects only declare what is specific to them.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+
+    <!--
+      Every sample reads the same User Secrets store, so you configure your
+      AI provider once and all chapters pick it up. See README.md.
+    -->
+    <UserSecretsId>northwind-ai-engineer-samples</UserSecretsId>
+
+    <!--
+      Some AI APIs used in the book are flagged as experimental by their authors.
+      The chapters point out where this applies; the warnings are suppressed here
+      so they do not drown out real problems in the build output.
+    -->
+    <NoWarn>$(NoWarn);OPENAI001;MEAI001;MAAI001;MCPEXP001;AIEVAL001</NoWarn>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 8.6: the vector store lifecycle with Microsoft.Extensions.VectorData and the in-memory connector. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Numerics.Tensors" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

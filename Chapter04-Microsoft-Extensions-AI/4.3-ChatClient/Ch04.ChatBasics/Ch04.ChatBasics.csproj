@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 4.3: requests, responses, multimodal content, metadata and cancellation with IChatClient. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

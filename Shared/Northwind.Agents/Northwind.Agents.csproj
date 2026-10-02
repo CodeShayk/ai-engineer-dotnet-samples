@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Agent building blocks shared by Chapters 10, 12 and 16:
+      ContextProviders/  the customer profile and policy knowledge context providers (Chapter 10.6)
+  -->
+  <PropertyGroup>
+    <RootNamespace>Northwind.Agents</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Agents.AI" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

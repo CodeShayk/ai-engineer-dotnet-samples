@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 10.4: multi-turn sessions, persisted to disk and restored after a restart. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+  </ItemGroup>
+
+</Project>

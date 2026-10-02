@@ -1,0 +1,13 @@
+# The Aspire dashboard for local development (Chapter 15.6).
+#   docker compose up -d
+# Then run Ch15.ObservableAssistant, which exports OTLP to http://localhost:4317, and open
+# http://localhost:18888. The dashboard prints a sign-in link with a token in its log:
+#   docker compose logs aspire-dashboard
+services:
+  aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: aspire-dashboard
+    ports:
+      - "18888:18888"   # Dashboard UI
+      - "4317:18889"    # OTLP over gRPC, where the application sends its telemetry
+    restart: unless-stopped

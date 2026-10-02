@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Section 14.6: the golden dataset as xUnit tests. Dataset checks run on every build.
+    Evaluations run only when RUN_MODEL_TESTS=true, because they call live models; results are
+    stored for the "dotnet aieval report" tool, and responses are cached between runs.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.AI.Evaluation" />
+    <PackageReference Include="Microsoft.Extensions.AI.Evaluation.Quality" />
+    <PackageReference Include="Microsoft.Extensions.AI.Evaluation.Reporting" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+    <ProjectReference Include="..\..\14.5-CustomEvaluators\Ch14.CustomEvaluators\Ch14.CustomEvaluators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\golden-dataset.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

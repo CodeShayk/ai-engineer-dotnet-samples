@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Section 7.4: connecting .NET to local models through IChatClient with OllamaSharp,
+    including model management, context length, structured output, tools and the
+    OpenAI-compatible endpoint. Reuses the Chapter 5 triage type unchanged.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+    <ProjectReference Include="..\..\..\Chapter05-Structured-Outputs\5.3-TypedResponses\Ch05.TypedResponses\Ch05.TypedResponses.csproj" />
+  </ItemGroup>
+
+</Project>

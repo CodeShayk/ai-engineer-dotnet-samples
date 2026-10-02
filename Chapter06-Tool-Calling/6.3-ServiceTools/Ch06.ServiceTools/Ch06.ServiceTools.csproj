@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!--
+    Section 6.3: tools backed by scoped services in an ASP.NET Core application. A simulated
+    sign-in (a demo authentication scheme) supplies the customer identity, so the sample runs
+    without an identity provider.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

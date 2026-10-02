@@ -1,0 +1,17 @@
+{
+  "_comment": "Illustrative prices only. Replace them with your provider's current rates before relying on the results.",
+  "workload": {
+    "name": "Northwind Assist support chat",
+    "conversationsPerDay": 20000,
+    "turnsPerConversation": 4,
+    "inputTokensPerTurn": 3000,
+    "outputTokensPerTurn": 250,
+    "cachedInputShare": 0.30,
+    "daysPerMonth": 30
+  },
+  "models": [
+    { "name": "Small cloud model", "inputPerMillion": 0.40, "cachedInputPerMillion": 0.10, "outputPerMillion": 1.60 },
+    { "name": "Mid-size cloud model", "inputPerMillion": 1.25, "cachedInputPerMillion": 0.30, "outputPerMillion": 5.00 },
+    { "name": "Large cloud model", "inputPerMillion": 4.00, "cachedInputPerMillion": 1.00, "outputPerMillion": 16.00 }
+  ]
+}

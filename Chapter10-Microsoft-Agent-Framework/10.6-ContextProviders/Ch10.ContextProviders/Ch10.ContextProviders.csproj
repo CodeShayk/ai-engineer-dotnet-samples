@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 10.6: context providers for the customer profile, policy retrieval and remembered preferences. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+  </ItemGroup>
+
+</Project>

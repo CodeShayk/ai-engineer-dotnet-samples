@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northwind Assist</title>
+  <style>
+    body { font-family: "Segoe UI", system-ui, sans-serif; max-width: 900px; margin: 1.5rem auto; padding: 0 1rem; color: #333; }
+    h1 { color: #0078D4; font-size: 1.4rem; margin-bottom: .25rem; }
+    .meta { color: #666; font-size: .85rem; }
+    .bar { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin: .75rem 0; }
+    select, input, button { padding: .45rem; border: 1px solid #999; border-radius: 4px; font: inherit; }
+    button { background: #0078D4; color: #fff; border: 0; cursor: pointer; }
+    button.secondary { background: #555; }
+    .layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
+    #log { border: 1px solid #ccc; border-radius: 4px; padding: .75rem; height: 26rem; overflow-y: auto; background: #fafafa; white-space: pre-wrap; }
+    .customer { color: #0078D4; font-weight: 600; margin-top: .6rem; }
+    .system { color: #8a6d00; font-style: italic; }
+    .error { color: #b00020; }
+    form { display: flex; gap: .5rem; margin-top: .6rem; }
+    form input { flex: 1; }
+    #approvals { border: 1px solid #ccc; border-radius: 4px; padding: .75rem; background: #fff8e6; }
+    .approval { border-bottom: 1px solid #e0c97f; padding: .4rem 0; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>Northwind Assist</h1>
+  <div class="meta">Chapter 16 capstone. Simulated sign-in for local development only.</div>
+
+  <div class="bar">
+    <label>Signed in as
+      <select id="customer">
+        <option value="C003">Thomas Hardy (C003, UK)</option>
+        <option value="C001">Maria Anders (C001)</option>
+        <option value="C002">Ana Trujillo (C002)</option>
+        <option value="C005">Hanna Moos (C005)</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="supervisor"> Supervisor</label>
+    <button class="secondary" id="new">New conversation</button>
+    <span class="meta" id="status"></span>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div id="log"></div>
+      <form id="form">
+        <input id="input" autocomplete="off" placeholder="Try: Hi, the jacket from my order NW-10248 leaks at the seams." />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    <div>
+      <div id="approvals"><strong>Approval queue</strong><div class="meta">Tick "Supervisor" to review pending requests.</div></div>
+    </div>
+  </div>
+
+  <script>
+    let conversationId = null;
+    const log = document.getElementById('log');
+    const customer = document.getElementById('customer');
+    const supervisor = document.getElementById('supervisor');
+    const status = document.getElementById('status');
+
+    const headers = () => {
+      const h = { 'Content-Type': 'application/json', 'X-Demo-Customer': customer.value };
+      if (supervisor.checked) h['X-Demo-Role'] = 'supervisor';
+      return h;
+    };
+
+    function line(className, text) {
+      const div = document.createElement('div');
+      div.className = className;
+      div.textContent = text;           // Never innerHTML: model output is untrusted.
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+      return div;
+    }
+
+    document.getElementById('new').onclick = () => { conversationId = null; log.textContent = ''; status.textContent = ''; };
+    customer.onchange = () => document.getElementById('new').click();
+
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      line('customer', 'You: ' + text);
+      const reply = line('assistant', '');
+
+      const response = await fetch('/api/assistant/chat', {
+        method: 'POST', headers: headers(), body: JSON.stringify({ conversationId, message: text })
+      });
+      if (!response.ok) { line('error', `Request failed: ${response.status}`); return; }
+      status.textContent = 'Variant: ' + (response.headers.get('X-Northwind-Variant') ?? '?');
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let boundary;
+        while ((boundary = buffer.indexOf('\n\n')) >= 0) {
+          const raw = buffer.slice(0, boundary);
+          buffer = buffer.slice(boundary + 2);
+          const type = (raw.match(/^event: ?(.*)$/m) ?? [])[1] ?? 'message';
+          const data = raw.split('\n').filter(l => l.startsWith('data:')).map(l => l.slice(5).replace(/^ /, '')).join('\n');
+          if (type === 'delta') reply.textContent += data;
+          else if (type === 'final') reply.textContent = data;     // The sanitized reply replaces the stream.
+          else if (type === 'approval') line('system', 'Waiting for supervisor approval: ' + JSON.parse(data).ToolName);
+          else if (type === 'error') line('error', data);
+          else if (type === 'done') conversationId = JSON.parse(data).conversationId;
+        }
+      }
+      refreshApprovals();
+    });
+
+    async function refreshApprovals() {
+      const panel = document.getElementById('approvals');
+      if (!supervisor.checked) return;
+      const response = await fetch('/api/approvals', { headers: headers() });
+      panel.innerHTML = '<strong>Approval queue</strong>';
+      if (!response.ok) { panel.append(` (${response.status})`); return; }
+      const items = await response.json();
+      if (items.length === 0) { const d = document.createElement('div'); d.className = 'meta'; d.textContent = 'Nothing waiting.'; panel.append(d); }
+      for (const item of items) {
+        const div = document.createElement('div');
+        div.className = 'approval';
+        div.textContent = `${item.customer}: ${item.toolName} ${item.arguments} `;
+        for (const approved of [true, false]) {
+          const b = document.createElement('button');
+          b.textContent = approved ? 'Approve' : 'Decline';
+          if (!approved) b.className = 'secondary';
+          b.onclick = async () => {
+            const r = await fetch(`/api/approvals/${item.conversationId}/${encodeURIComponent(item.approvalId)}`, {
+              method: 'POST', headers: headers(), body: JSON.stringify({ approved, reason: approved ? null : 'Declined in the demo' })
+            });
+            const result = await r.json();
+            if (item.conversationId === conversationId) line('system', `Supervisor ${approved ? 'approved' : 'declined'}. ${result.reply ?? ''}`);
+            refreshApprovals();
+          };
+          div.append(b, ' ');
+        }
+        panel.append(div);
+      }
+    }
+
+    supervisor.onchange = refreshApprovals;
+  </script>
+</body>
+</html>

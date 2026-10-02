@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:5117
+
+### Ask a question
+POST {{baseUrl}}/api/ask
+Content-Type: application/json
+
+{ "question": "What should I check before returning headphones?" }
+
+### Extract a structured ticket (validated, retried with feedback)
+POST {{baseUrl}}/api/extract
+Content-Type: application/json
+
+{ "message": "My order A-12345 still hasn't arrived after two weeks and I need it for a trip on Friday." }
+
+### Health (never calls the model)
+GET {{baseUrl}}/health

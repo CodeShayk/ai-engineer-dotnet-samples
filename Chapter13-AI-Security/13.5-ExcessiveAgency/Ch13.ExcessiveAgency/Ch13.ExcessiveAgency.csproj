@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Section 13.5: the red-team scenarios as repeatable tests. A scripted model plays the part of
+    a model that has been manipulated, so the tests check the code around the model, run in
+    milliseconds and need no model or credentials.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+  </ItemGroup>
+
+</Project>

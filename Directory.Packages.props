@@ -1,0 +1,87 @@
+<Project>
+
+  <!--
+    Central package management: every NuGet version used by the companion code
+    is pinned here, so all chapters build against the same libraries.
+    Projects reference packages without a Version attribute.
+
+    Transitive pinning lets this file also raise the version of indirect dependencies,
+    which is how known-vulnerable transitive packages are patched (see "Security pins").
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="Microsoft.Extensions.AI">
+    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.10.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.10.1" />
+    <PackageVersion Include="Microsoft.Extensions.AI.OpenAI" Version="10.10.1" />
+    <PackageVersion Include="OpenAI" Version="2.14.0" />
+    <PackageVersion Include="OllamaSharp" Version="5.5.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Tokenization and numerics">
+    <PackageVersion Include="Microsoft.ML.Tokenizers" Version="2.0.0" />
+    <PackageVersion Include="Microsoft.ML.Tokenizers.Data.O200kBase" Version="2.0.0" />
+    <PackageVersion Include="System.Numerics.Tensors" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup Label="Vector data">
+    <PackageVersion Include="Microsoft.Extensions.VectorData.Abstractions" Version="10.10.0" />
+    <PackageVersion Include="CommunityToolkit.VectorData.InMemory" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Label="Microsoft Agent Framework">
+    <PackageVersion Include="Microsoft.Agents.AI" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.Abstractions" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.Workflows.Generators" Version="1.23.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Model Context Protocol">
+    <PackageVersion Include="ModelContextProtocol" Version="2.2.0" />
+    <PackageVersion Include="ModelContextProtocol.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Evaluation">
+    <PackageVersion Include="Microsoft.Extensions.AI.Evaluation" Version="10.10.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI.Evaluation.Quality" Version="10.10.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI.Evaluation.Reporting" Version="10.10.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Observability">
+    <PackageVersion Include="OpenTelemetry" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.19.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.19.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Hosting, configuration, logging and resilience">
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Resilience" Version="10.10.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testing">
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageVersion Include="xunit.v3" Version="4.0.1" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Security pins for transitive dependencies">
+    <!-- Older versions pulled in transitively carry a published advisory (NU1903). -->
+    <PackageVersion Include="Microsoft.Bcl.Memory" Version="10.0.12" />
+  </ItemGroup>
+
+</Project>

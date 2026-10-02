@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 10.5: tools, approvals across runs, and agent run and function calling middleware. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 11.5: consuming the Northwind MCP server from a chat client and an agent. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+    <!--
+      Build-order only: building the client also builds the stdio server it launches, so the
+      client can start the server without rebuilding it (the no-build option of dotnet run),
+      which keeps build output away from the standard output stream that carries the protocol.
+    -->
+    <ProjectReference Include="..\..\11.4-BuildingAServer\Ch11.McpServer.Stdio\Ch11.McpServer.Stdio.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

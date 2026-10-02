@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!--
+    Section 16.2: the capstone. Northwind Assist as a production-shaped ASP.NET Core application,
+    assembled layer by layer from the components built throughout the book. It runs locally with
+    in-memory stores and in-process tools; the README describes running it against real infrastructure.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Agents.AI.Workflows" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="ModelContextProtocol" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Agents\Northwind.Agents.csproj" />
+    <ProjectReference Include="..\..\16.3-Resilience\Ch16.ResilientChatClient\Ch16.ResilientChatClient.csproj" />
+  </ItemGroup>
+
+</Project>

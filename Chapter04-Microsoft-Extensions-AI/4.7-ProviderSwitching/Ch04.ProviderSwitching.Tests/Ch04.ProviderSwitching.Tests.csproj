@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Section 4.7: testing without a model. Every test here uses FakeChatClient, so the suite
+    runs in milliseconds on every build and never needs credentials.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Northwind.Shared\Northwind.Shared.csproj" />
+    <ProjectReference Include="..\..\..\Chapter03-Prompt-Engineering\3.3-FewShot\Ch03.FewShotClassification\Ch03.FewShotClassification.csproj" />
+    <ProjectReference Include="..\..\4.4-Streaming\Ch04.StreamingApi\Ch04.StreamingApi.csproj" />
+    <ProjectReference Include="..\..\4.6-Middleware\Ch04.ClientPipeline\Ch04.ClientPipeline.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+# Requests for the Visual Studio / VS Code REST client. Start the app first (dotnet run).
+
+@baseUrl = http://localhost:5115
+
+### Send a varied batch of requests through every path, then look at the dashboard
+POST {{baseUrl}}/api/demo/traffic
+
+### Ask the policy assistant (spans: rewrite, retrieve, rerank, model calls)
+POST {{baseUrl}}/api/assistant/ask
+Content-Type: application/json
+
+{ "question": "How long do refunds take once you receive my return?", "region": "global" }
+
+### A question the policies cannot answer (a retrieval miss and an escalation metric)
+POST {{baseUrl}}/api/assistant/ask
+Content-Type: application/json
+
+{ "question": "Do you sell gift cards for restaurants?" }
+
+### Chat with the order agent (spans: agent run, tool calls, model calls; tool outcome metrics)
+POST {{baseUrl}}/api/assistant/chat
+Content-Type: application/json
+
+{ "message": "Can I return the speaker from order NW-10252? I've opened it." }
+
+### Stream a response (records time to first token)
+POST {{baseUrl}}/api/assistant/stream
+Content-Type: application/json
+
+{ "message": "Do you deliver on Saturdays?" }
+
+### Health check: verifies the model endpoint is reachable without sending a prompt
+GET {{baseUrl}}/health

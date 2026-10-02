@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Section 11.4: the MCP server hosted over Streamable HTTP in ASP.NET Core, protected by an API key. -->
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ch11.McpServer.Tools\Ch11.McpServer.Tools.csproj" />
+  </ItemGroup>
+
+</Project>

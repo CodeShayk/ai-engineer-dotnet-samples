@@ -1,0 +1,18 @@
+# Build output
+bin/
+obj/
+*.user
+.vs/
+.idea/
+TestResults/
+
+# Evaluation results and response caches (Chapter 14)
+eval-results/
+eval-report.html
+
+# Agent sessions saved by Chapter 10
+sessions/
+
+# Local settings that might hold secrets; use User Secrets instead
+appsettings.Development.local.json
+*.env

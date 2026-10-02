@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northwind Assist - Service tools</title>
+  <style>
+    body { font-family: "Segoe UI", system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #333; }
+    h1 { color: #0078D4; font-size: 1.4rem; }
+    .signin { display: flex; gap: .5rem; align-items: center; margin-bottom: 1rem; }
+    select, input { padding: .5rem; border: 1px solid #999; border-radius: 4px; }
+    #log { border: 1px solid #ccc; border-radius: 4px; padding: 1rem; min-height: 12rem; white-space: pre-wrap; background: #fafafa; }
+    .user { color: #0078D4; font-weight: 600; margin-top: .75rem; }
+    .tools { color: #8a6d00; font-family: Consolas, monospace; font-size: .85rem; }
+    .error { color: #b00020; }
+    form { display: flex; gap: .5rem; margin-top: 1rem; }
+    form input { flex: 1; }
+    button { padding: .5rem 1rem; background: #0078D4; color: white; border: 0; border-radius: 4px; cursor: pointer; }
+    .meta { color: #666; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <h1>Northwind Assist (Chapter 6.3: service tools)</h1>
+  <div class="signin">
+    <label for="customer">Signed in as</label>
+    <select id="customer"></select>
+    <span class="meta">Simulated sign-in for local development only.</span>
+  </div>
+  <p class="meta">Try "What are my recent orders?", then switch customer and ask again. Then try "Show me order NW-10252" while signed in as someone other than Ana Trujillo.</p>
+  <div id="log"></div>
+  <form id="form">
+    <input id="input" autocomplete="off" placeholder="Ask about your orders..." />
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    let history = [];
+    const log = document.getElementById('log');
+    const customer = document.getElementById('customer');
+
+    function append(className, text) {
+      const div = document.createElement('div');
+      div.className = className;
+      div.textContent = text;   // Never innerHTML: model output is untrusted.
+      log.appendChild(div);
+    }
+
+    fetch('/api/demo/customers').then(r => r.json()).then(customers => {
+      for (const c of customers) {
+        const option = document.createElement('option');
+        option.value = c.customerId;
+        option.textContent = `${c.name} (${c.customerId})`;
+        customer.appendChild(option);
+      }
+      customer.value = 'C003';
+    });
+
+    // A different customer means a different conversation.
+    customer.addEventListener('change', () => {
+      history = [];
+      append('meta', `--- Signed in as ${customer.options[customer.selectedIndex].text} ---`);
+    });
+
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      history.push({ role: 'user', content: text });
+      append('user', 'You: ' + text);
+
+      const response = await fetch('/api/support/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Demo-Customer': customer.value },
+        body: JSON.stringify({ messages: history })
+      });
+
+      if (!response.ok) {
+        append('error', `Request failed: ${response.status} ${response.statusText}`);
+        history.pop();
+        return;
+      }
+
+      const result = await response.json();
+      for (const call of result.toolCalls) append('tools', 'tool: ' + call);
+      append('assistant', result.reply);
+      history.push({ role: 'assistant', content: result.reply });
+    });
+  </script>
+</body>
+</html>

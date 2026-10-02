@@ -1,0 +1,189 @@
+<Solution>
+  <Folder Name="/Chapter01-From-DotNet-To-AI-Engineer/" />
+  <Folder Name="/Chapter01-From-DotNet-To-AI-Engineer/1.6-SetupCheck/">
+    <Project Path="Chapter01-From-DotNet-To-AI-Engineer/1.6-SetupCheck/Ch01.SetupCheck/Ch01.SetupCheck.csproj" />
+  </Folder>
+  <Folder Name="/Chapter02-LLM-Fundamentals/" />
+  <Folder Name="/Chapter02-LLM-Fundamentals/2.2-Tokenization/">
+    <Project Path="Chapter02-LLM-Fundamentals/2.2-Tokenization/Ch02.Tokenization/Ch02.Tokenization.csproj" />
+  </Folder>
+  <Folder Name="/Chapter02-LLM-Fundamentals/2.4-Embeddings/">
+    <Project Path="Chapter02-LLM-Fundamentals/2.4-Embeddings/Ch02.EmbeddingSimilarity/Ch02.EmbeddingSimilarity.csproj" />
+  </Folder>
+  <Folder Name="/Chapter02-LLM-Fundamentals/2.5-Inference/">
+    <Project Path="Chapter02-LLM-Fundamentals/2.5-Inference/Ch02.InferenceTiming/Ch02.InferenceTiming.csproj" />
+  </Folder>
+  <Folder Name="/Chapter02-LLM-Fundamentals/2.6-Sampling/">
+    <Project Path="Chapter02-LLM-Fundamentals/2.6-Sampling/Ch02.SamplingExplorer/Ch02.SamplingExplorer.csproj" />
+  </Folder>
+  <Folder Name="/Chapter02-LLM-Fundamentals/2.7-ModelSelection/">
+    <Project Path="Chapter02-LLM-Fundamentals/2.7-ModelSelection/Ch02.CostEstimator/Ch02.CostEstimator.csproj" />
+  </Folder>
+  <Folder Name="/Chapter03-Prompt-Engineering/" />
+  <Folder Name="/Chapter03-Prompt-Engineering/3.1-MessageRoles/">
+    <Project Path="Chapter03-Prompt-Engineering/3.1-MessageRoles/Ch03.MessageRoles/Ch03.MessageRoles.csproj" />
+  </Folder>
+  <Folder Name="/Chapter03-Prompt-Engineering/3.3-FewShot/">
+    <Project Path="Chapter03-Prompt-Engineering/3.3-FewShot/Ch03.FewShotClassification/Ch03.FewShotClassification.csproj" />
+  </Folder>
+  <Folder Name="/Chapter03-Prompt-Engineering/3.5-ContextManagement/">
+    <Project Path="Chapter03-Prompt-Engineering/3.5-ContextManagement/Ch03.ContextManagement/Ch03.ContextManagement.csproj" />
+  </Folder>
+  <Folder Name="/Chapter03-Prompt-Engineering/3.6-PromptTemplates/">
+    <Project Path="Chapter03-Prompt-Engineering/3.6-PromptTemplates/Ch03.PromptTemplates/Ch03.PromptTemplates.csproj" />
+  </Folder>
+  <Folder Name="/Chapter03-Prompt-Engineering/3.7-PromptTesting/">
+    <Project Path="Chapter03-Prompt-Engineering/3.7-PromptTesting/Ch03.PromptTests/Ch03.PromptTests.csproj" />
+  </Folder>
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/" />
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/4.3-ChatClient/">
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.3-ChatClient/Ch04.ChatBasics/Ch04.ChatBasics.csproj" />
+  </Folder>
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/4.4-Streaming/">
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.4-Streaming/Ch04.StreamingApi/Ch04.StreamingApi.csproj" />
+  </Folder>
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/4.5-Embeddings/">
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.5-Embeddings/Ch04.EmbeddingGenerator/Ch04.EmbeddingGenerator.csproj" />
+  </Folder>
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/4.6-Middleware/">
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.6-Middleware/Ch04.ClientPipeline/Ch04.ClientPipeline.csproj" />
+  </Folder>
+  <Folder Name="/Chapter04-Microsoft-Extensions-AI/4.7-ProviderSwitching/">
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.7-ProviderSwitching/Ch04.ProviderSwitching.Tests/Ch04.ProviderSwitching.Tests.csproj" />
+    <Project Path="Chapter04-Microsoft-Extensions-AI/4.7-ProviderSwitching/Ch04.ProviderSwitching/Ch04.ProviderSwitching.csproj" />
+  </Folder>
+  <Folder Name="/Chapter05-Structured-Outputs/" />
+  <Folder Name="/Chapter05-Structured-Outputs/5.3-TypedResponses/">
+    <Project Path="Chapter05-Structured-Outputs/5.3-TypedResponses/Ch05.TypedResponses/Ch05.TypedResponses.csproj" />
+  </Folder>
+  <Folder Name="/Chapter05-Structured-Outputs/5.4-ValidationAndRetries/">
+    <Project Path="Chapter05-Structured-Outputs/5.4-ValidationAndRetries/Ch05.ValidatedExtraction/Ch05.ValidatedExtraction.csproj" />
+  </Folder>
+  <Folder Name="/Chapter05-Structured-Outputs/5.5-Patterns/">
+    <Project Path="Chapter05-Structured-Outputs/5.5-Patterns/Ch05.StructuredPatterns/Ch05.StructuredPatterns.csproj" />
+  </Folder>
+  <Folder Name="/Chapter06-Tool-Calling/" />
+  <Folder Name="/Chapter06-Tool-Calling/6.2-FunctionTools/">
+    <Project Path="Chapter06-Tool-Calling/6.2-FunctionTools/Ch06.FunctionTools/Ch06.FunctionTools.csproj" />
+  </Folder>
+  <Folder Name="/Chapter06-Tool-Calling/6.3-ServiceTools/">
+    <Project Path="Chapter06-Tool-Calling/6.3-ServiceTools/Ch06.ServiceTools/Ch06.ServiceTools.csproj" />
+  </Folder>
+  <Folder Name="/Chapter06-Tool-Calling/6.4-ManualInvocation/">
+    <Project Path="Chapter06-Tool-Calling/6.4-ManualInvocation/Ch06.ManualInvocation/Ch06.ManualInvocation.csproj" />
+  </Folder>
+  <Folder Name="/Chapter06-Tool-Calling/6.5-SafeTools/">
+    <Project Path="Chapter06-Tool-Calling/6.5-SafeTools/Ch06.SafeTools/Ch06.SafeTools.csproj" />
+  </Folder>
+  <Folder Name="/Chapter07-Local-and-Open-Models/" />
+  <Folder Name="/Chapter07-Local-and-Open-Models/7.4-OllamaChat/">
+    <Project Path="Chapter07-Local-and-Open-Models/7.4-OllamaChat/Ch07.OllamaChat/Ch07.OllamaChat.csproj" />
+  </Folder>
+  <Folder Name="/Chapter07-Local-and-Open-Models/7.5-HybridRouting/">
+    <Project Path="Chapter07-Local-and-Open-Models/7.5-HybridRouting/Ch07.HybridRouting/Ch07.HybridRouting.csproj" />
+  </Folder>
+  <Folder Name="/Chapter08-Vector-Databases/" />
+  <Folder Name="/Chapter08-Vector-Databases/8.2-SimilaritySearch/">
+    <Project Path="Chapter08-Vector-Databases/8.2-SimilaritySearch/Ch08.SimilarityMetrics/Ch08.SimilarityMetrics.csproj" />
+  </Folder>
+  <Folder Name="/Chapter08-Vector-Databases/8.3-HybridSearch/">
+    <Project Path="Chapter08-Vector-Databases/8.3-HybridSearch/Ch08.HybridSearch/Ch08.HybridSearch.csproj" />
+  </Folder>
+  <Folder Name="/Chapter08-Vector-Databases/8.6-VectorStore/">
+    <Project Path="Chapter08-Vector-Databases/8.6-VectorStore/Ch08.ProductSearch/Ch08.ProductSearch.csproj" />
+  </Folder>
+  <Folder Name="/Chapter09-RAG/" />
+  <Folder Name="/Chapter09-RAG/9.3-Chunking/">
+    <Project Path="Chapter09-RAG/9.3-Chunking/Ch09.Chunking/Ch09.Chunking.csproj" />
+  </Folder>
+  <Folder Name="/Chapter09-RAG/9.8-Reranking/">
+    <Project Path="Chapter09-RAG/9.8-Reranking/Ch09.Reranking/Ch09.Reranking.csproj" />
+  </Folder>
+  <Folder Name="/Chapter09-RAG/9.9-PolicyAssistant/">
+    <Project Path="Chapter09-RAG/9.9-PolicyAssistant/Ch09.PolicyAssistant/Ch09.PolicyAssistant.csproj" />
+  </Folder>
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/" />
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/10.3-FirstAgent/">
+    <Project Path="Chapter10-Microsoft-Agent-Framework/10.3-FirstAgent/Ch10.FirstAgent/Ch10.FirstAgent.csproj" />
+  </Folder>
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/10.4-Sessions/">
+    <Project Path="Chapter10-Microsoft-Agent-Framework/10.4-Sessions/Ch10.AgentSessions/Ch10.AgentSessions.csproj" />
+  </Folder>
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/10.5-ToolsAndMiddleware/">
+    <Project Path="Chapter10-Microsoft-Agent-Framework/10.5-ToolsAndMiddleware/Ch10.ToolsAndMiddleware/Ch10.ToolsAndMiddleware.csproj" />
+  </Folder>
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/10.6-ContextProviders/">
+    <Project Path="Chapter10-Microsoft-Agent-Framework/10.6-ContextProviders/Ch10.ContextProviders/Ch10.ContextProviders.csproj" />
+  </Folder>
+  <Folder Name="/Chapter10-Microsoft-Agent-Framework/10.8-Workflows/">
+    <Project Path="Chapter10-Microsoft-Agent-Framework/10.8-Workflows/Ch10.Workflows/Ch10.Workflows.csproj" />
+  </Folder>
+  <Folder Name="/Chapter11-Model-Context-Protocol/" />
+  <Folder Name="/Chapter11-Model-Context-Protocol/11.4-BuildingAServer/">
+    <Project Path="Chapter11-Model-Context-Protocol/11.4-BuildingAServer/Ch11.McpServer.Http/Ch11.McpServer.Http.csproj" />
+    <Project Path="Chapter11-Model-Context-Protocol/11.4-BuildingAServer/Ch11.McpServer.Stdio/Ch11.McpServer.Stdio.csproj" />
+    <Project Path="Chapter11-Model-Context-Protocol/11.4-BuildingAServer/Ch11.McpServer.Tools/Ch11.McpServer.Tools.csproj" />
+  </Folder>
+  <Folder Name="/Chapter11-Model-Context-Protocol/11.5-ConsumingServers/">
+    <Project Path="Chapter11-Model-Context-Protocol/11.5-ConsumingServers/Ch11.McpClient/Ch11.McpClient.csproj" />
+  </Folder>
+  <Folder Name="/Chapter12-AI-Agents/" />
+  <Folder Name="/Chapter12-AI-Agents/12.3-Orchestrations/">
+    <Project Path="Chapter12-AI-Agents/12.3-Orchestrations/Ch12.Orchestrations/Ch12.Orchestrations.csproj" />
+  </Folder>
+  <Folder Name="/Chapter12-AI-Agents/12.4-Handoffs/">
+    <Project Path="Chapter12-AI-Agents/12.4-Handoffs/Ch12.SupportHandoff/Ch12.SupportHandoff.csproj" />
+  </Folder>
+  <Folder Name="/Chapter12-AI-Agents/12.7-Guardrails/">
+    <Project Path="Chapter12-AI-Agents/12.7-Guardrails/Ch12.BoundedAgent/Ch12.BoundedAgent.csproj" />
+  </Folder>
+  <Folder Name="/Chapter13-AI-Security/" />
+  <Folder Name="/Chapter13-AI-Security/13.2-PromptInjection/">
+    <Project Path="Chapter13-AI-Security/13.2-PromptInjection/Ch13.PromptInjectionDefenses/Ch13.PromptInjectionDefenses.csproj" />
+  </Folder>
+  <Folder Name="/Chapter13-AI-Security/13.3-SensitiveData/">
+    <Project Path="Chapter13-AI-Security/13.3-SensitiveData/Ch13.SensitiveDataProtection/Ch13.SensitiveDataProtection.csproj" />
+  </Folder>
+  <Folder Name="/Chapter13-AI-Security/13.4-OutputHandling/">
+    <Project Path="Chapter13-AI-Security/13.4-OutputHandling/Ch13.SafeOutputHandling/Ch13.SafeOutputHandling.csproj" />
+  </Folder>
+  <Folder Name="/Chapter13-AI-Security/13.5-ExcessiveAgency/">
+    <Project Path="Chapter13-AI-Security/13.5-ExcessiveAgency/Ch13.ExcessiveAgency/Ch13.ExcessiveAgency.csproj" />
+  </Folder>
+  <Folder Name="/Chapter13-AI-Security/13.6-VectorSecurity/">
+    <Project Path="Chapter13-AI-Security/13.6-VectorSecurity/Ch13.SecureRetrieval/Ch13.SecureRetrieval.csproj" />
+  </Folder>
+  <Folder Name="/Chapter14-AI-Evaluation/" />
+  <Folder Name="/Chapter14-AI-Evaluation/14.3-QualityEvaluators/">
+    <Project Path="Chapter14-AI-Evaluation/14.3-QualityEvaluators/Ch14.QualityEvaluators/Ch14.QualityEvaluators.csproj" />
+  </Folder>
+  <Folder Name="/Chapter14-AI-Evaluation/14.5-CustomEvaluators/">
+    <Project Path="Chapter14-AI-Evaluation/14.5-CustomEvaluators/Ch14.CustomEvaluators/Ch14.CustomEvaluators.csproj" />
+  </Folder>
+  <Folder Name="/Chapter14-AI-Evaluation/14.6-EvaluationTests/">
+    <Project Path="Chapter14-AI-Evaluation/14.6-EvaluationTests/Ch14.EvaluationTests/Ch14.EvaluationTests.csproj" />
+  </Folder>
+  <Folder Name="/Chapter15-AI-Observability/" />
+  <Folder Name="/Chapter15-AI-Observability/15.6-OpenTelemetry/">
+    <Project Path="Chapter15-AI-Observability/15.6-OpenTelemetry/Ch15.ObservableAssistant/Ch15.ObservableAssistant.csproj" />
+  </Folder>
+  <Folder Name="/Chapter16-Production-Architecture/" />
+  <Folder Name="/Chapter16-Production-Architecture/16.2-ReferenceArchitecture/">
+    <Project Path="Chapter16-Production-Architecture/16.2-ReferenceArchitecture/Ch16.NorthwindAssist.Api/Ch16.NorthwindAssist.Api.csproj" />
+  </Folder>
+  <Folder Name="/Chapter16-Production-Architecture/16.3-Resilience/">
+    <Project Path="Chapter16-Production-Architecture/16.3-Resilience/Ch16.ResilientChatClient/Ch16.ResilientChatClient.csproj" />
+  </Folder>
+  <Folder Name="/Chapter16-Production-Architecture/16.5-CostAndScale/">
+    <Project Path="Chapter16-Production-Architecture/16.5-CostAndScale/Ch16.CostOptimization/Ch16.CostOptimization.csproj" />
+  </Folder>
+  <Folder Name="/Chapter17-Your-Path-Forward/" />
+  <Folder Name="/Chapter17-Your-Path-Forward/17.3-PortfolioStarter/">
+    <Project Path="Chapter17-Your-Path-Forward/17.3-PortfolioStarter/Ch17.PortfolioStarter.EvaluationTests/Ch17.PortfolioStarter.EvaluationTests.csproj" />
+    <Project Path="Chapter17-Your-Path-Forward/17.3-PortfolioStarter/Ch17.PortfolioStarter/Ch17.PortfolioStarter.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Shared/Northwind.Agents/Northwind.Agents.csproj" />
+    <Project Path="Shared/Northwind.Shared/Northwind.Shared.csproj" />
+  </Folder>
+</Solution>

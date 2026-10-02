@@ -14,7 +14,7 @@ Most products sold by Northwind come with a one-year limited warranty from the d
 
 ## What the warranty does not cover
 
-The warranty does not cover accidental damage, normal wear and tear, misuse, or modifications made by anyone other than Northwind or an authorised repairer.
+The warranty does not cover accidental damage, normal wear and tear, misuse, or modifications made by anyone other than Northwind or an authorized repairer.
 
 ## Making a warranty claim
 

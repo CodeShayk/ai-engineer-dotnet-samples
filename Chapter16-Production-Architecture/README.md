@@ -36,7 +36,7 @@ dotnet run --project 16.2-ReferenceArchitecture/Ch16.NorthwindAssist.Api # then 
 
 ### Trying it
 
-Open `http://localhost:5116`, choose a customer and chat. Replies stream as Server-Sent Events: `delta` events carry raw text as it is generated, and a `final` event carries the reply after leak scanning and sanitization, which replaces the streamed text. A `done` event reports the conversation id, the variant that served it (`stable`, or `canary` for about 10% of conversations) and the agent that answered.
+Open `http://localhost:5116`, choose a customer and chat. Replies stream as Server-Sent Events: `delta` events carry raw text as it is generated, and a `final` event carries the reply as safe HTML, after leak scanning and sanitization, which replaces the streamed text. A `done` event reports the conversation id, the variant that served it (`stable`, or `canary` for about 10% of conversations) and the agent that answered.
 
 To see an approval, ask for a refund on an eligible item, for example as Thomas Hardy: "The jacket from my order NW-10248 leaks at the seams. I'd like a refund." When the refund agent requests it, the conversation pauses. Tick **Supervisor** to see the queue, and approve or decline. The decision resumes the stored session on behalf of the customer who owns the conversation, which may happen long after the customer's request.
 

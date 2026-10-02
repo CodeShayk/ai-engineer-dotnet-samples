@@ -47,7 +47,7 @@ public sealed class DatasetAndRetrievalTests
         foreach (GoldenCase testCase in cases)
         {
             IReadOnlyList<RetrievedChunk> results = await knowledge.Retriever.SearchAsync(
-                testCase.Question, new CustomerContext(testCase.CustomerRegion), top: 5, TestContext.Current.CancellationToken);
+                testCase.Question, new CustomerContext(testCase.CustomerRegion), top: 4, TestContext.Current.CancellationToken);
 
             if (!results.Any(r => testCase.RelevantDocuments.Contains(r.DocumentId)))
             {
@@ -56,9 +56,10 @@ public sealed class DatasetAndRetrievalTests
         }
 
         double hitRate = 1.0 - (double)misses.Count / cases.Count;
-        TestContext.Current.SendDiagnosticMessage($"Retrieval hit rate (top 5): {hitRate:P0}");
+        TestContext.Current.SendDiagnosticMessage($"Retrieval hit rate (top 4): {hitRate:P0}");
 
-        Assert.True(hitRate >= 0.8, $"Hit rate {hitRate:P0} is below 80%. Missed: {string.Join(", ", misses)}");
+        // The release bar from Section 14.2: a relevant passage in the top 4 for at least 90% of questions.
+        Assert.True(hitRate >= 0.9, $"Hit rate {hitRate:P0} is below 90%. Missed: {string.Join(", ", misses)}");
     }
 
     [Fact]

@@ -137,7 +137,7 @@ if (args.Contains("--as-agent"))
 {
     SampleConsole.Section("The whole team as a single AIAgent");
 
-    AIAgent northwindAssist = supportTeam.AsAIAgent(name: "NorthwindAssist");
+    AIAgent northwindAssist = supportTeam.AsAIAgent(id: "northwind-assist", name: "NorthwindAssist");
     AgentSession session = await northwindAssist.CreateSessionAsync();
 
     AgentResponse response = await northwindAssist.RunAsync("When will my order NW-10249 arrive?", session);

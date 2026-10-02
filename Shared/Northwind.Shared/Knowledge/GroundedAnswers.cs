@@ -121,7 +121,7 @@ public static class CitationValidator
             {
                 problems.Add($"Citation '{citation.SourceId}' does not match any provided source id.");
             }
-            else if (!source.Text.Contains(citation.Quote.Trim(), StringComparison.OrdinalIgnoreCase))
+            else if (!Normalize(source.Text).Contains(Normalize(citation.Quote), StringComparison.OrdinalIgnoreCase))
             {
                 problems.Add($"The quote attributed to '{citation.SourceId}' does not appear in that source. Quote it exactly.");
             }
@@ -134,4 +134,11 @@ public static class CitationValidator
 
         return problems;
     }
+
+    // Models freely swap straight and curly quotes and reflow whitespace; neither changes what was quoted.
+    private static string Normalize(string text) =>
+        string.Join(' ', text
+            .Replace('\u2018', '\'').Replace('\u2019', '\'')
+            .Replace('\u201C', '"').Replace('\u201D', '"')
+            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
 }

@@ -19,6 +19,22 @@ public sealed class ModelOptions
 
     public string ResolvedEndpoint => Endpoint ?? (Provider == "Ollama" ? "http://localhost:11434" : "");
 
+    /// <summary>Comma-separated deployments that serve reasoning models, when their names do not say so.</summary>
+    public string? ReasoningDeployments { get; set; }
+
+    /// <summary>
+    /// Reasoning models, such as the gpt-5 family and the o-series, reject sampling settings like
+    /// temperature with HTTP 400, and count hidden reasoning tokens against the output limit.
+    /// Names that reveal the model are recognized without being listed.
+    /// </summary>
+    public bool IsReasoningModel =>
+        Provider is "AzureOpenAI" or "OpenAI"
+        && (ChatModel.StartsWith("gpt-5", StringComparison.OrdinalIgnoreCase)
+            || (ChatModel.Length > 1 && char.ToLowerInvariant(ChatModel[0]) == 'o' && char.IsDigit(ChatModel[1]))
+            || (ReasoningDeployments ?? "")
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Contains(ChatModel, StringComparer.OrdinalIgnoreCase));
+
     public void Validate()
     {
         if (Provider is not ("Ollama" or "AzureOpenAI" or "OpenAI"))
@@ -48,12 +64,33 @@ public static class ModelClients
     {
         options.Validate();
 
-        return options.Provider switch
+        IChatClient client = options.Provider switch
         {
             "Ollama" => new OllamaApiClient(new Uri(options.ResolvedEndpoint), options.ChatModel),
             "OpenAI" => new OpenAIClient(new ApiKeyCredential(options.ApiKey!)).GetChatClient(options.ChatModel).AsIChatClient(),
             _ => CreateAzureOpenAIClient(options).GetChatClient(options.ChatModel).AsIChatClient()
         };
+
+        // Remove the sampling settings that reasoning models reject, so features can set them freely, and
+        // unless a feature chooses its own reasoning options, ask for low effort and add headroom to any
+        // output limit for the hidden reasoning tokens.
+        return options.IsReasoningModel
+            ? client.AsBuilder()
+                .ConfigureOptions(o =>
+                {
+                    o.Temperature = null;
+                    o.TopP = null;
+                    o.FrequencyPenalty = null;
+                    o.PresencePenalty = null;
+
+                    if (o.Reasoning is null)
+                    {
+                        o.Reasoning = new ReasoningOptions { Effort = ReasoningEffort.Low };
+                        o.MaxOutputTokens += 1_024;
+                    }
+                })
+                .Build()
+            : client;
     }
 
     private static OpenAIClient CreateAzureOpenAIClient(ModelOptions options)

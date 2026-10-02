@@ -25,8 +25,8 @@ Console.WriteLine(JsonSerializer.Serialize(schema, new JsonSerializerOptions { W
 SampleConsole.Section("Triage with GetResponseAsync<TicketTriage>");
 
 string message = """
-    This is the third time I'm writing. My earbuds (order NW-10249) were supposed to arrive
-    last Friday and the tracking hasn't moved in five days. I need them for a trip on Monday.
+    This is the third time I'm writing. I ordered earbuds (order NW-10249) four days ago and
+    the tracking hasn't changed since they shipped. I fly out on Monday and can't travel without them.
     """;
 
 ChatResponse<TicketTriage> response = await chatClient.GetResponseAsync<TicketTriage>(
@@ -47,12 +47,20 @@ await router.RouteAsync(triage);
 // --- Reading the result safely --------------------------------------------------------------
 SampleConsole.Section("The failure path: a response cut off by the output limit");
 
+// The shared factory adds headroom for a reasoning model's hidden reasoning tokens unless the request
+// sets its own reasoning options (Chapter 4.7), so set them here to keep the limit at exactly 12.
+var tinyLimit = new ChatOptions { Temperature = 0, MaxOutputTokens = 12 };
+if (options.IsReasoningModel(options.ChatDeployment))
+{
+    tinyLimit.Reasoning = new ReasoningOptions { Effort = ReasoningEffort.Low };
+}
+
 ChatResponse<TicketTriage> truncated = await chatClient.GetResponseAsync<TicketTriage>(
     [
         new ChatMessage(ChatRole.System, "You triage customer support messages for Northwind Traders."),
         new ChatMessage(ChatRole.User, message)
     ],
-    new ChatOptions { Temperature = 0, MaxOutputTokens = 12 });
+    tinyLimit);
 
 if (truncated.TryGetResult(out TicketTriage? partial))
 {

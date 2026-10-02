@@ -4,7 +4,7 @@ Companion code for Chapter 15. One project, Northwind Assist as an ASP.NET Core 
 
 | Section | File | What it shows |
 |---|---|---|
-| 15.2 | `Telemetry/TimeToFirstTokenChatClient.cs` | Chat client middleware recording time to first token as a histogram. |
+| 15.2 | `Telemetry/TimeToFirstTokenChatClient.cs` | Chat client middleware recording the time to the first streamed text as a histogram. |
 | 15.3 | `Telemetry/TracedPolicyRetriever.cs`, `ObservablePolicyAssistant.cs` | Spans of our own for query rewriting, retrieval and reranking, recording chunk ids and scores, never content. |
 | 15.4 | `Telemetry/CostTrackingChatClient.cs`, `Telemetry/AIFeature.cs` | Estimated cost per call from a configurable price list, tagged with the model and the feature that made the call. |
 | 15.5 | `Telemetry/AssistantMetrics.cs`, `Program.cs` | Behavioral metrics: tool call outcomes, retrieval misses and escalations. A health check that never sends a prompt. |
@@ -29,7 +29,7 @@ curl -X POST http://localhost:5115/api/demo/traffic
 `Ch15.ObservableAssistant.http` contains individual requests for each endpoint. Open `http://localhost:18888` and look at:
 
 - **Traces.** Open a `POST /api/assistant/ask` trace to see the rewrite, retrieve and rerank spans, the model calls inside them and the attempts to produce a valid grounded answer. Open a chat trace to see the agent run, each tool call and each model round trip.
-- **Metrics.** Under the `northwind-assist` resource: `gen_ai.client.token.usage` and `gen_ai.client.operation.duration` from the built-in instrumentation, and `northwind.ai.time_to_first_token`, `northwind.ai.estimated_cost`, `northwind.assistant.tool_calls`, `northwind.assistant.retrieval_misses` and `northwind.assistant.escalations` from our own code.
+- **Metrics.** Under the `northwind-assist` resource: `gen_ai.client.token.usage`, `gen_ai.client.operation.duration` and, for streamed calls, `gen_ai.client.operation.time_to_first_chunk` and `gen_ai.client.operation.time_per_output_chunk` from the built-in instrumentation, and `northwind.ai.time_to_first_token`, `northwind.ai.estimated_cost`, `northwind.assistant.tool_calls`, `northwind.assistant.retrieval_misses` and `northwind.assistant.escalations` from our own code.
 - **Structured logs.** Application logs, correlated with the traces that produced them.
 
 In Development, the chat client and agent capture message content (`EnableSensitiveData`), so the dashboard shows the full prompts and responses for each model call. Outside Development, content capture is off.

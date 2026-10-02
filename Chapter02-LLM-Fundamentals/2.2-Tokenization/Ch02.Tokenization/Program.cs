@@ -10,7 +10,7 @@ string[] samples =
 [
     "Where is my order?",
     "OrderStatusRepository.GetAsync(orderId, cancellationToken)",
-    "Order NW-2024-118734 was dispatched on 14/03 via courier ref ZX99812044."
+    "Order NW-10249 was dispatched on 2026-09-27 via courier ref ZX99812044."
 ];
 
 Console.WriteLine("Token counts (o200k_base encoding)");

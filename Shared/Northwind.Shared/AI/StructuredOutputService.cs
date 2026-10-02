@@ -24,7 +24,8 @@ public static class ModelValidation
 
 /// <summary>
 /// Requests structured output, validates it, and retries with specific feedback when the
-/// output is malformed, truncated or invalid (Chapter 5.4). Reused by Chapters 9 and 14.
+/// output is malformed, truncated or invalid (Chapter 5.4). A response blocked by the content
+/// filter is not retried. Reused by Chapters 9 and 14.
 /// </summary>
 public sealed class StructuredOutputService(IChatClient chatClient, ILogger<StructuredOutputService>? logger = null)
 {
@@ -44,6 +45,13 @@ public sealed class StructuredOutputService(IChatClient chatClient, ILogger<Stru
         {
             ChatResponse<T> response = await chatClient.GetResponseAsync<T>(
                 conversation, options, cancellationToken: cancellationToken);
+
+            // A blocked response would be blocked again, so stop and let a person review it.
+            if (response.FinishReason == ChatFinishReason.ContentFilter)
+            {
+                return new StructuredResult<T>(null, attempt,
+                    ["The provider's content filter blocked the response. Route it for human review."]);
+            }
 
             if (response.FinishReason == ChatFinishReason.Length)
             {

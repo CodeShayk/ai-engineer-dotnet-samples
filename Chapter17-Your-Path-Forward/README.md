@@ -18,7 +18,7 @@ dotnet run --project 17.3-PortfolioStarter/Ch17.PortfolioStarter        # http:/
 dotnet test --project 17.3-PortfolioStarter/Ch17.PortfolioStarter.EvaluationTests
 ```
 
-The starter reads the same `AI` settings as the rest of the companion code (`AI:Provider`, `AI:Endpoint`, `AI:ApiKey`, `AI:ChatDeployment`) and defaults to Ollama with `llama3.2`. `Ch17.PortfolioStarter.http` has example requests. The golden relevance case needs a capable judge model; small local models often fail to follow the evaluator's output format.
+The starter reads the same `AI` settings as the rest of the companion code (`AI:Provider`, `AI:Endpoint`, `AI:ApiKey`, `AI:ChatDeployment`, `AI:ReasoningDeployments`) and defaults to Ollama with `llama3.2`. For reasoning models such as `gpt-5-mini`, it removes the sampling settings they reject, as the shared factory does. `Ch17.PortfolioStarter.http` has example requests. The golden relevance case needs a capable judge model; small local models often fail to follow the evaluator's output format.
 
 ## Five portfolio projects
 

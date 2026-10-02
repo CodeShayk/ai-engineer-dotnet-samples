@@ -6,7 +6,7 @@ Companion code for Chapter 13. Each project demonstrates the controls for one fa
 |---|---|---|---|
 | 13.2 | `13.2-PromptInjection/Ch13.PromptInjectionDefenses` | An attack corpus screened by Prompt Shields or a heuristic detector, an email summarized inside an unpredictable boundary, and restricted-mode processing for emails that contain attacks. | Optional (`--offline`) |
 | 13.3 | `13.3-SensitiveData/Ch13.SensitiveDataProtection` | `RedactingChatClient` removing payment and contact details before every model call, the Luhn checksum, `OutputLeakScanner` checking replies on the way out, and telemetry configured without message content. | Optional (`--offline`) |
-| 13.4 | `13.4-OutputHandling/Ch13.SafeOutputHandling` | Malicious outputs (image exfiltration, script, untrusted and `javascript:` links) run through `AssistantOutputSanitizer`. | No |
+| 13.4 | `13.4-OutputHandling/Ch13.SafeOutputHandling` | Malicious outputs (inline and reference-style images, script, untrusted and `javascript:` links) run through `AssistantOutputSanitizer`, which renders safe HTML. | No |
 | 13.5 | `13.5-ExcessiveAgency/Ch13.ExcessiveAgency` | xUnit tests in which a scripted model falls for a hidden instruction, believes a customer's false identity and requests refunds repeatedly, and the code around it holds every time. | No |
 | 13.6 | `13.6-VectorSecurity/Ch13.SecureRetrieval` | A two-tenant knowledge base: screening at ingestion quarantines a poisoned review, and `SecureKnowledgeRetriever` applies tenant, audience and status filters to every search. | Optional (`--offline`) |
 

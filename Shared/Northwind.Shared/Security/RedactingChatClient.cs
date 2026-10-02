@@ -31,9 +31,29 @@ public sealed class RedactingChatClient(IChatClient innerClient, ISensitiveDataR
                 continue;
             }
 
-            (string text, int count) = redactor.Redact(message.Text);
-            redactions += count;
-            result.Add(count == 0 ? message : new ChatMessage(message.Role, text));
+            ChatMessage? redactedMessage = null;
+            for (int i = 0; i < message.Contents.Count; i++)
+            {
+                if (message.Contents[i] is not TextContent text)
+                {
+                    continue;   // Images, files and other content pass through unchanged.
+                }
+
+                (string redacted, int count) = redactor.Redact(text.Text);
+                if (count > 0)
+                {
+                    // Copy the message once, with its own contents list, so the caller's message is not modified.
+                    redactedMessage ??= new ChatMessage(message.Role, [.. message.Contents])
+                    {
+                        AuthorName = message.AuthorName,
+                        AdditionalProperties = message.AdditionalProperties
+                    };
+                    redactedMessage.Contents[i] = new TextContent(redacted);
+                    redactions += count;
+                }
+            }
+
+            result.Add(redactedMessage ?? message);
         }
 
         if (redactions > 0)

@@ -9,7 +9,10 @@ namespace Ch16.NorthwindAssist.Api.Endpoints;
 /// <summary>Helpers shared by the chat and approval endpoints: output safety and approval bookkeeping.</summary>
 public sealed class ConversationRunner(AssistantOutputSanitizer sanitizer, OutputLeakScanner leakScanner, ILogger<ConversationRunner> logger)
 {
-    /// <summary>The last line of defense before text reaches a browser: leak scanning, then sanitization.</summary>
+    /// <summary>
+    /// The last line of defense before text reaches a browser: leak scanning, then sanitization.
+    /// Returns the reply as safe HTML, built from the parsed and cleaned Markdown.
+    /// </summary>
     public string MakeSafe(string text, string conversationId)
     {
         OutputScanResult scan = leakScanner.Scan(text);
@@ -18,7 +21,7 @@ public sealed class ConversationRunner(AssistantOutputSanitizer sanitizer, Outpu
             logger.LogWarning("Blocked {Findings} in a reply in conversation {ConversationId}", string.Join(", ", scan.Findings), conversationId);
         }
 
-        return sanitizer.Sanitize(scan.SafeText);
+        return sanitizer.ToSafeHtml(scan.SafeText);
     }
 
     /// <summary>Records each new approval request once; a response can report the same request more than once.</summary>

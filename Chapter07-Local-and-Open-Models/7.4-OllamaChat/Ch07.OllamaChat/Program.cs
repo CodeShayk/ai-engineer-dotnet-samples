@@ -91,8 +91,8 @@ SampleConsole.Note($"{response.Usage?.InputTokenCount} input tokens. num_ctx was
 SampleConsole.Section("Structured output with a local model");
 
 string customerMessage = """
-    This is the third time I'm writing. My earbuds (order NW-10249) were supposed to arrive
-    last Friday and the tracking hasn't moved in five days. I need them for a trip on Monday.
+    This is the third time I'm writing. I ordered earbuds (order NW-10249) four days ago and
+    the tracking hasn't changed since they shipped. I fly out on Monday and can't travel without them.
     """;
 
 started = Stopwatch.GetTimestamp();

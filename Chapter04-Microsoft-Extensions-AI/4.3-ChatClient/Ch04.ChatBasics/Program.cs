@@ -47,7 +47,7 @@ using (var timeout = CancellationTokenSource.CreateLinkedTokenSource(shutdown.To
     }
     catch (OperationCanceledException)
     {
-        Console.WriteLine("The call was cancelled after 200 ms, as intended. Always pass a cancellation token.");
+        Console.WriteLine("The call was canceled after 200 ms, as intended. Always pass a cancellation token.");
     }
 }
 

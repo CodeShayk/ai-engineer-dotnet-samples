@@ -30,7 +30,7 @@ Dictionary<string, ReadOnlyMemory<float>> vectors = products.Keys
 string[] queries =
 [
     "Is the TD-35 daypack waterproof?",
-    "Does the TD-35 fit a laptop?",        // "laptop" pulls vector search towards the laptop sleeve
+    "Does the TD-35 fit a laptop?",        // "laptop" pulls vector search toward the laptop sleeve
     "something to keep my tea hot",        // Meaning matters more than shared words
     "Summit"                               // An exact name: keyword search matches it precisely
 ];

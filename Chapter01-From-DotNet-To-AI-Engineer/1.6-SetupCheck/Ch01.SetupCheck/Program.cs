@@ -14,8 +14,6 @@ IConfiguration config = new ConfigurationBuilder()
     .Build();
 
 string provider = config["AI:Provider"] ?? "Ollama";
-string endpoint = config["AI:Endpoint"]
-    ?? (provider == "Ollama" ? "http://localhost:11434" : throw new InvalidOperationException("AI:Endpoint is not configured."));
 string model = config["AI:ChatDeployment"]
     ?? (provider == "Ollama" ? "llama3.2" : throw new InvalidOperationException("AI:ChatDeployment is not configured."));
 
@@ -26,11 +24,16 @@ IChatClient chatClient = provider switch
     "AzureOpenAI" => new OpenAIClient(
             new BearerTokenPolicy(new DefaultAzureCredential(),
                 "https://cognitiveservices.azure.com/.default"),
-            new OpenAIClientOptions { Endpoint = new Uri(endpoint) })
+            new OpenAIClientOptions { Endpoint = new Uri(Required("AI:Endpoint")) })
         .GetChatClient(model)
         .AsIChatClient(),
 
-    "Ollama" => new OllamaApiClient(new Uri(endpoint), model),
+    // OpenAI itself authenticates with an API key, kept in User Secrets.
+    "OpenAI" => new OpenAIClient(Required("AI:ApiKey"))
+        .GetChatClient(model)
+        .AsIChatClient(),
+
+    "Ollama" => new OllamaApiClient(new Uri(config["AI:Endpoint"] ?? "http://localhost:11434"), model),
 
     _ => throw new NotSupportedException($"Unknown provider '{provider}'.")
 };
@@ -45,3 +48,6 @@ if (response.Usage is { } usage)
 {
     Console.WriteLine($"Tokens: {usage.InputTokenCount} in, {usage.OutputTokenCount} out");
 }
+
+string Required(string key) =>
+    config[key] ?? throw new InvalidOperationException($"{key} is not configured.");

@@ -24,7 +24,7 @@ All three use the embedding model configured with `AI:EmbeddingDeployment` (by d
 ## What to look for
 
 - **Normalized vectors.** `Ch08.SimilarityMetrics` prints the length of the query vector. When it is 1, the three metrics produce the same ranking, which you can confirm in the table.
-- **Where each method wins.** In `Ch08.HybridSearch`, the question "Does the TD-35 fit a laptop?" mentions a laptop, which pulls vector search towards the laptop sleeve. With `nomic-embed-text`, vector search ranks the sleeve first and the TD-35 second, while keyword search matches the rare token `td-35` exactly and the hybrid result keeps the TD-35 on top. Other embedding models may rank these differently, which is itself the point: hybrid search makes the result less sensitive to the quirks of one method.
+- **Where each method wins.** In `Ch08.HybridSearch`, the question "Does the TD-35 fit a laptop?" mentions a laptop, which pulls vector search toward the laptop sleeve. With `nomic-embed-text`, vector search ranks the sleeve first and the TD-35 second, while keyword search matches the rare token `td-35` exactly and the hybrid result keeps the TD-35 on top. Other embedding models may rank these differently, which is itself the point: hybrid search makes the result less sensitive to the quirks of one method.
 - **Filters run before ranking.** In `Ch08.ProductSearch`, the filtered search returns only two results for a top-3 request, because only two products pass the filter. A filter is a constraint, not a re-ranking.
 - **Scores depend on the model.** The absolute scores differ between embedding models, so compare rankings, not raw numbers, when you switch providers.
 

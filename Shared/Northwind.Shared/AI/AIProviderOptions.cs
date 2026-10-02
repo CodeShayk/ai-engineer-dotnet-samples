@@ -42,6 +42,23 @@ public sealed record AIProviderOptions
     /// <summary>Number of dimensions produced by the embedding model.</summary>
     public int EmbeddingDimensions { get; init; }
 
+    /// <summary>
+    /// Deployments that serve reasoning models, which reject sampling settings such as temperature.
+    /// Names that begin with "gpt-5" or an o-series prefix (o1, o3, o4) are recognized without
+    /// being listed; list deployments whose names do not reveal the model, such as "chat-main".
+    /// </summary>
+    public IReadOnlyList<string> ReasoningDeployments { get; init; } = [];
+
+    /// <summary>
+    /// True if the model or deployment is a reasoning model served through OpenAI or Azure OpenAI.
+    /// Such models return HTTP 400 for sampling settings they do not support (Chapter 4.7).
+    /// </summary>
+    public bool IsReasoningModel(string model) =>
+        Provider is AIProvider.AzureOpenAI or AIProvider.OpenAI
+        && (ReasoningDeployments.Contains(model, StringComparer.OrdinalIgnoreCase)
+            || model.StartsWith("gpt-5", StringComparison.OrdinalIgnoreCase)
+            || (model.Length > 1 && char.ToLowerInvariant(model[0]) == 'o' && char.IsDigit(model[1])));
+
     public static AIProviderOptions FromConfiguration(IConfiguration configuration)
     {
         IConfigurationSection section = configuration.GetSection(SectionName);
@@ -51,6 +68,9 @@ public sealed record AIProviderOptions
             : AIProvider.Ollama;
 
         int? configuredDimensions = int.TryParse(section["EmbeddingDimensions"], out int d) ? d : null;
+
+        string[] reasoningDeployments = (section["ReasoningDeployments"] ?? "")
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
         AIProviderOptions options;
         if (provider == AIProvider.Ollama)
@@ -79,7 +99,8 @@ public sealed record AIProviderOptions
                 SmallChatDeployment = section["SmallChatDeployment"] ?? chat,
                 JudgeChatDeployment = section["JudgeChatDeployment"] ?? chat,
                 EmbeddingDeployment = section["EmbeddingDeployment"] ?? "text-embedding-3-small",
-                EmbeddingDimensions = configuredDimensions ?? 1536
+                EmbeddingDimensions = configuredDimensions ?? 1536,
+                ReasoningDeployments = reasoningDeployments
             };
         }
 

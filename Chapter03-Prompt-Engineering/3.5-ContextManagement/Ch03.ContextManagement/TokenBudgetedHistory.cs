@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.Extensions.AI;
 using Microsoft.ML.Tokenizers;
 
@@ -20,25 +21,43 @@ public sealed class TokenBudgetedHistory(Tokenizer tokenizer, int historyTokenBu
 
     public void AddRange(IEnumerable<ChatMessage> messages) => _messages.AddRange(messages);
 
-    /// <summary>Returns the most recent messages that fit within the budget, oldest first.</summary>
+    /// <summary>
+    /// Returns the most recent messages that fit within the budget, oldest first. The window always
+    /// starts at a user message, so a tool call is never separated from its result.
+    /// </summary>
     public IReadOnlyList<ChatMessage> GetWithinBudget()
     {
-        var selected = new List<ChatMessage>();
+        int start = _messages.Count;
         int used = 0;
 
-        for (int i = _messages.Count - 1; i >= 0; i--)
+        while (start > 0)
         {
-            int cost = tokenizer.CountTokens(_messages[i].Text) + PerMessageOverhead;
+            int cost = CountTokens(_messages[start - 1]);
             if (used + cost > historyTokenBudget)
             {
                 break;
             }
 
-            selected.Add(_messages[i]);
             used += cost;
+            start--;
         }
 
-        selected.Reverse();
-        return selected;
+        // Never begin mid-turn: providers reject a tool result whose call is missing.
+        while (start < _messages.Count && _messages[start].Role != ChatRole.User)
+        {
+            start++;
+        }
+
+        return _messages.GetRange(start, _messages.Count - start);
     }
+
+    // Counts every kind of content, because tool calls and results use tokens too.
+    private int CountTokens(ChatMessage message) =>
+        PerMessageOverhead + message.Contents.Sum(content => content switch
+        {
+            TextContent text => tokenizer.CountTokens(text.Text),
+            FunctionCallContent call => tokenizer.CountTokens($"{call.Name} {JsonSerializer.Serialize(call.Arguments, AIJsonUtilities.DefaultOptions)}"),
+            FunctionResultContent result => tokenizer.CountTokens(JsonSerializer.Serialize(result.Result, AIJsonUtilities.DefaultOptions)),
+            _ => 0
+        });
 }

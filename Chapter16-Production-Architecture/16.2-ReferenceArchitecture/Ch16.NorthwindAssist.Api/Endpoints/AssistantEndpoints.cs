@@ -16,7 +16,7 @@ public sealed record AssistantChatRequest(string? ConversationId, string Message
 /// <summary>
 /// The chat endpoints. Replies stream as Server-Sent Events:
 ///   delta     raw text as it is generated; render it as plain text only
-///   final     the complete reply after leak scanning and sanitization; replace the streamed text with it
+///   final     the complete reply as safe HTML, after leak scanning and sanitization; replace the streamed text with it
 ///   approval  an action is waiting for a supervisor
 ///   done      the conversation id, the variant (stable or canary) and the agent that answered
 /// </summary>

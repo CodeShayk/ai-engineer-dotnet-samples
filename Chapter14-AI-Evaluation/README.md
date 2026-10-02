@@ -64,3 +64,5 @@ dotnet user-secrets set "AI:JudgeChatDeployment" "<a capable model deployment>" 
 ## The golden dataset
 
 `Data/golden-dataset.json` holds twelve cases across returns, refunds, shipping, warranties (including a UK-specific one), pricing, loyalty, out-of-scope and safety. Required facts may list alternative phrasings separated by `|`, such as `"two years|2 years|two-year"`, because exact-substring checks are otherwise brittle. Add a case whenever you fix a reported failure, so it cannot quietly return.
+
+The first case, `returns-opened-electronics`, is the earbuds question from Chapter 9. Its reference answer includes the return label deduction from the returns policy, so expect it to fail, on the `label` fact and on completeness, until retrieval finds that rule. Catching that gap is the point of the case.

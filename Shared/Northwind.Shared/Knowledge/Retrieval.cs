@@ -34,7 +34,7 @@ public sealed record RetrievedChunk(
 /// <summary>
 /// Filtered vector search over the policy library (Chapter 9.5). Hard rules, such as
 /// current documents only, customer audience and the customer's region, are applied as a
-/// filter inside the search, never afterwards.
+/// filter inside the search, never afterward.
 /// </summary>
 public sealed class PolicyRetriever(
     VectorStoreCollection<string, PolicyChunkRecord> collection,

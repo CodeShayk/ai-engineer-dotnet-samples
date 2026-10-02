@@ -22,7 +22,7 @@ SampleConsole.Section("Classification");
 
 foreach (string message in SampleInputs.ClassificationMessages)
 {
-    StructuredResult<RefundEligibilityAssessment> result = await structuredOutput.GetAsync<RefundEligibilityAssessment>(
+    StructuredResult<RequestedOutcomeClassification> result = await structuredOutput.GetAsync<RequestedOutcomeClassification>(
         ReturnPrompts.ForClassification(message), options: deterministic);
 
     Console.WriteLine(result.Succeeded

@@ -6,7 +6,7 @@
       Domain/     the Northwind Traders customers, products, orders and business rules
       Tools/      order and refund tools (Chapter 6), reused by later chapters
       Knowledge/  the policy library and retrieval pipeline (Chapter 9), reused by later chapters
-      Security/   sensitive data redaction (Chapters 10 and 13)
+      Security/   redaction, prompt attack screening and output sanitization (Chapters 10, 13 and 16)
       Testing/    a fake IChatClient for unit tests (Chapter 4.7)
   -->
   <PropertyGroup>
@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.ML.Tokenizers" />
     <PackageReference Include="Microsoft.ML.Tokenizers.Data.O200kBase" />
     <PackageReference Include="CommunityToolkit.VectorData.InMemory" />
+    <PackageReference Include="Markdig" />
     <PackageReference Include="OllamaSharp" />
   </ItemGroup>
 

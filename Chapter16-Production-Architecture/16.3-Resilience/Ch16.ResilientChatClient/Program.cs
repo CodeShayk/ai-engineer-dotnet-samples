@@ -67,7 +67,8 @@ SampleConsole.Section("3. A deployment that hangs: the per-attempt timeout fires
     long started = Stopwatch.GetTimestamp();
     ChatResponse response = await client.GetResponseAsync(question);
     Console.WriteLine($"{response.Text} after {Stopwatch.GetElapsedTime(started).TotalSeconds:F1} s.");
-    SampleConsole.Note("Hangs are not retried here, because a timeout is not one of the transient errors the retry handles.");
+    SampleConsole.Note("Hangs are not retried, because the secondary is a better bet than waiting again, but the circuit " +
+                       "breaker counts each timeout, so a deployment that keeps hanging is soon skipped altogether.");
 }
 
 // --- 4. Streaming --------------------------------------------------------------------------------------

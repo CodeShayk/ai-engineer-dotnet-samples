@@ -133,7 +133,7 @@ async Task RunRefundWorkflowAsync()
     Workflow refunds = new WorkflowBuilder(validate)
         .AddEdge(validate, approvalPort)
         .AddEdge(approvalPort, execute)
-        .WithOutputFrom(validate, execute)
+        .WithOutputFrom(validate, execute)   // Validation can reject a request outright, so it yields outputs too
         .Build();
 
     RefundCase[] cases =

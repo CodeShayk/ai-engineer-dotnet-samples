@@ -16,7 +16,7 @@ If you are not sure whether an item can be returned, check your order in your No
 
 ## Items that cannot be returned
 
-Groceries, personalised items and products marked as final sale cannot be returned unless they arrive damaged or faulty. Final sale items are clearly labelled on the product page and in your order confirmation.
+Groceries, personalized items and products marked as final sale cannot be returned unless they arrive damaged or faulty. Final sale items are clearly labeled on the product page and in your order confirmation.
 
 Opened electronics have a shorter return window. See the Electronics Returns policy for details.
 

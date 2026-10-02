@@ -31,9 +31,9 @@ public sealed class SensitiveDataRoutingChatClient(
     public object? GetService(Type serviceType, object? serviceKey = null) =>
         serviceType.IsInstanceOfType(this) ? this : cloudClient.GetService(serviceType, serviceKey);
 
+    // The router does not own the clients it routes between: whoever created them, often the
+    // dependency injection container, disposes them.
     public void Dispose()
     {
-        cloudClient.Dispose();
-        localClient.Dispose();
     }
 }

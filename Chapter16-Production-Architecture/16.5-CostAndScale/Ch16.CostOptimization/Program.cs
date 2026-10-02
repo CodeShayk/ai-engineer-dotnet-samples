@@ -40,7 +40,7 @@ string[] messages =
     "Is the Lumen lamp dimmable?",
     "I've been waiting two weeks, the tracking hasn't moved, and nobody replies to my emails. This is unacceptable. What are you going to do about it?",
     "Can you compare the warranty on the Nimbus speaker with the one on the Aurora earbuds?",
-    "My parcel shows as delivered but I wasn't home, my neighbour hasn't got it, and I also want to change the address on my next order.",
+    "My parcel shows as delivered but I wasn't home, my neighbor doesn't have it, and I also want to change the address on my next order.",
     "Can I use loyalty points on sale items?",
 ];
 

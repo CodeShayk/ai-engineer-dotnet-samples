@@ -46,8 +46,16 @@ public static class ManualToolLoop
 
                 auditLog.Record(call.Name, call.Arguments);
 
-                object? result = await function.InvokeAsync(new AIFunctionArguments(call.Arguments), cancellationToken);
-                results.Add(new FunctionResultContent(call.CallId, result));
+                try
+                {
+                    object? result = await function.InvokeAsync(new AIFunctionArguments(call.Arguments), cancellationToken);
+                    results.Add(new FunctionResultContent(call.CallId, result));
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    // Report the failure to the model without internal details, as UseFunctionInvocation does.
+                    results.Add(new FunctionResultContent(call.CallId, $"Error: the {call.Name} tool failed.") { Exception = ex });
+                }
             }
 
             history.Add(new ChatMessage(ChatRole.Tool, results));

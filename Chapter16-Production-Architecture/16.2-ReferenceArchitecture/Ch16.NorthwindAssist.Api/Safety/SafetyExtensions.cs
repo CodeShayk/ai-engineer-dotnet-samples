@@ -13,7 +13,7 @@ public static class SafetyExtensions
     {
         services.AddSingleton<ISensitiveDataRedactor>(new PaymentAndContactRedactor());
         services.AddSingleton(new OutputLeakScanner());
-        services.AddSingleton(new ActionRateLimiter(maxCallsPerToolPerRun: 3));
+        services.AddSingleton(new ActionRateLimiter(maxCallsPerToolPerConversation: 3));
 
         string[] allowedHosts = configuration.GetSection("Safety:AllowedLinkHosts").Get<string[]>() ?? [];
         services.AddSingleton(new AssistantOutputSanitizer(new HashSet<string>(allowedHosts, StringComparer.OrdinalIgnoreCase)));

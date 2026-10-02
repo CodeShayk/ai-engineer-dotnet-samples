@@ -63,7 +63,7 @@ async Task RunSequentialAsync()
 
     const string emailWithFacts = """
         Customer email:
-        "Hi, I ordered the Aurora earbuds (NW-10249) five days ago and they still haven't arrived. Can you
+        "Hi, I ordered the Aurora earbuds (NW-10249) four days ago and they still haven't arrived. Can you
         guarantee they'll come tomorrow? If not, I want a full refund and a discount on my next order!"
 
         Facts:
@@ -125,7 +125,7 @@ async Task RunGroupChatAsync()
     List<ChatMessage> input =
     [
         new(ChatRole.User,
-            "Write a 60-word description of the Lumen Desk Lamp: dimmable LED, adjustable colour temperature, " +
+            "Write a 60-word description of the Lumen Desk Lamp: dimmable LED, adjustable color temperature, " +
             "USB charging port in the base, $45.")
     ];
 

@@ -63,7 +63,7 @@ string[] emails =
 
     "The kettle from NW-10251 leaks. Call me on +44 20 7946 0958 or email ana.trujillo@example.com to arrange collection.",
 
-    "Does the Trailhead daypack come with a rain cover, and is there a larger size than 35 litres?",
+    "Does the Trailhead daypack come with a rain cover, and is there a larger size than 35 liters?",
 
     "My bank details for the refund are sort code 12-34-56, account 12345678. Order NW-10260, jacket not waterproof."
 ];

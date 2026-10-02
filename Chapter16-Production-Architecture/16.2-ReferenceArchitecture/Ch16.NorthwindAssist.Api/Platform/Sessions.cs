@@ -4,7 +4,10 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Ch16.NorthwindAssist.Api.Platform;
 
-/// <summary>One line of the conversation as shown to people: the customer, the assistant or a system note.</summary>
+/// <summary>
+/// One line of the conversation as shown to people: the customer, the assistant or a system note.
+/// Assistant replies hold the safe HTML that was sent to the browser.
+/// </summary>
 public sealed record TranscriptEntry(string Role, string Text, DateTimeOffset At);
 
 /// <summary>A refund (or other) action waiting for a supervisor, with the serialized approval request.</summary>

@@ -1,40 +1,60 @@
-using System.Text.RegularExpressions;
+using Markdig;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 
 namespace Northwind.Shared.Security;
 
 /// <summary>
-/// Makes model output safe to render as Markdown (Chapter 13.4): removes images, which a browser
-/// would fetch without a click, removes raw HTML, and keeps links only to allowlisted hosts over HTTPS.
+/// Makes model output safe to show in a browser (Chapter 13.4). It works on the parsed Markdown rather than
+/// on the text, because Markdown has several syntaxes for the same element: inline and reference-style
+/// images both become an image node, so one check removes them all. Images are removed, because a browser
+/// fetches them without a click; links are kept only to allowlisted hosts over HTTPS; raw HTML is shown as
+/// text. The result is HTML, so the browser never has to interpret Markdown written by the model.
 /// </summary>
-public sealed partial class AssistantOutputSanitizer(IReadOnlySet<string> allowedLinkHosts)
+public sealed class AssistantOutputSanitizer(IReadOnlySet<string> allowedLinkHosts)
 {
-    [GeneratedRegex(@"!\[[^\]]*\]\([^)]*\)")]
-    private static partial Regex MarkdownImage();
+    private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder().DisableHtml().Build();
 
-    [GeneratedRegex(@"\[(?<text>[^\]]*)\]\((?<url>[^)\s]+)[^)]*\)")]
-    private static partial Regex MarkdownLink();
-
-    [GeneratedRegex(@"<(script|style)\b[^>]*>[\s\S]*?</\1\s*>", RegexOptions.IgnoreCase)]
-    private static partial Regex ScriptOrStyleBlock();
-
-    [GeneratedRegex(@"<[^>]+>")]
-    private static partial Regex HtmlTag();
-
-    public string Sanitize(string markdown)
+    public string ToSafeHtml(string markdown)
     {
-        string result = MarkdownImage().Replace(markdown, "");    // No images from model output.
-        result = ScriptOrStyleBlock().Replace(result, "");         // No scripts or styles, including their contents.
-        result = HtmlTag().Replace(result, "");                    // No other raw HTML.
+        MarkdownDocument document = Markdown.Parse(markdown, Pipeline);
 
-        // Keep link text; keep the link only if it points at an allowed host over HTTPS.
-        return MarkdownLink().Replace(result, match =>
+        foreach (LinkInline link in document.Descendants<LinkInline>().ToList())
         {
-            string text = match.Groups["text"].Value;
-            return Uri.TryCreate(match.Groups["url"].Value, UriKind.Absolute, out Uri? uri)
-                   && uri.Scheme == Uri.UriSchemeHttps
-                   && allowedLinkHosts.Contains(uri.Host)
-                ? match.Value
-                : text;
-        });
+            if (link.IsImage)
+            {
+                link.Remove();                  // Inline and reference-style images alike.
+            }
+            else if (!IsAllowed(link.Url))
+            {
+                Unwrap(link);                   // Keep the link text, drop the link.
+            }
+        }
+
+        foreach (AutolinkInline autolink in document.Descendants<AutolinkInline>().ToList())
+        {
+            if (!IsAllowed(autolink.Url))
+            {
+                autolink.ReplaceBy(new LiteralInline(autolink.Url));
+            }
+        }
+
+        return Markdown.ToHtml(document, Pipeline);
+    }
+
+    private bool IsAllowed(string? url) =>
+        Uri.TryCreate(url, UriKind.Absolute, out Uri? uri)
+        && uri.Scheme == Uri.UriSchemeHttps
+        && allowedLinkHosts.Contains(uri.Host);
+
+    private static void Unwrap(LinkInline link)
+    {
+        while (link.FirstChild is { } child)
+        {
+            child.Remove();
+            link.InsertBefore(child);
+        }
+
+        link.Remove();
     }
 }

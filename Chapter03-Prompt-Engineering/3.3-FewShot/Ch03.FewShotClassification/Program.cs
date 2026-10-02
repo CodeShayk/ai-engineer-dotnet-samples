@@ -15,7 +15,7 @@ var classifier = new TicketClassifier(chatClient);
 [
     ("My parcel was meant to arrive on Tuesday and it's now Friday.", TicketCategory.OrderStatus),
     ("These boots rub my heel. Can I swap them for a bigger size?", TicketCategory.ReturnsAndRefunds),
-    ("There's a charge of $18 on my card that I don't recognise.", TicketCategory.Billing),
+    ("There's a charge of $18 on my card that I don't recognize.", TicketCategory.Billing),
     ("Is the teak bench okay to leave outside in winter?", TicketCategory.ProductQuestion),
     ("How do I change the email address on my account?", TicketCategory.AccountAndPrivacy),
     ("The courier left my parcel in the rain and the box is soaked. I want my money back.", TicketCategory.ReturnsAndRefunds),

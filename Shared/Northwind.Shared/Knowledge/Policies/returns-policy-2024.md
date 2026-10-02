@@ -14,7 +14,7 @@ Most items, including opened electronics, can be returned within 60 days of deli
 
 ## Items that cannot be returned
 
-Groceries and personalised items cannot be returned unless they arrive damaged or faulty.
+Groceries and personalized items cannot be returned unless they arrive damaged or faulty.
 
 ## How to start a return
 

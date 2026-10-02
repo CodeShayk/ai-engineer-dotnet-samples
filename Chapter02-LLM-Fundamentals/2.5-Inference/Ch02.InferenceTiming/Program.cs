@@ -57,7 +57,15 @@ Console.WriteLine($"Finish reason:       {streamed.FinishReason?.Value ?? "(not 
 // --- 2. A deliberately tiny output limit ---------------------------------------------
 SampleConsole.Section("Response with MaxOutputTokens = 12");
 
-ChatResponse truncated = await chatClient.GetResponseAsync(messages, new ChatOptions { MaxOutputTokens = 12 });
+// The shared factory adds headroom for a reasoning model's hidden reasoning tokens unless the request
+// sets its own reasoning options (Chapter 4.7), so set them here to keep the limit at exactly 12.
+var tinyLimit = new ChatOptions { MaxOutputTokens = 12 };
+if (options.IsReasoningModel(options.ChatDeployment))
+{
+    tinyLimit.Reasoning = new ReasoningOptions { Effort = ReasoningEffort.Low };
+}
+
+ChatResponse truncated = await chatClient.GetResponseAsync(messages, tinyLimit);
 
 Console.WriteLine(truncated.Text);
 Console.WriteLine();
@@ -66,5 +74,6 @@ Console.WriteLine($"Finish reason: {truncated.FinishReason?.Value ?? "(not repor
 if (truncated.FinishReason == ChatFinishReason.Length)
 {
     SampleConsole.Note("The response was cut off by the output limit. Treating it as complete would be a bug, " +
-                       "especially if the output was meant to be JSON.");
+                       "especially if the output was meant to be JSON. On a reasoning model the text can be empty: " +
+                       "the hidden reasoning tokens used up the limit before any visible output.");
 }

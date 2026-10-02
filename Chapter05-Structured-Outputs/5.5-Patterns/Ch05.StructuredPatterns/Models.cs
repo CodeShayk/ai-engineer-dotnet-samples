@@ -9,7 +9,7 @@ namespace Ch05.StructuredPatterns;
 [JsonConverter(typeof(JsonStringEnumConverter<RequestedOutcome>))]
 public enum RequestedOutcome { Refund, Exchange, Repair, Information, Unclear }
 
-public sealed record RefundEligibilityAssessment(
+public sealed record RequestedOutcomeClassification(
     [property: Description("Quote the sentence or sentences from the message that indicate what the customer wants.")]
     string Evidence,
 

@@ -81,7 +81,7 @@ GetPromptResult prompt = await mcpClient.GetPromptAsync(
     new Dictionary<string, object?>
     {
         ["orderNumber"] = "NW-10249",
-        ["issue"] = "Tracking hasn't changed for five days and I need it before Monday."
+        ["issue"] = "Tracking hasn't changed since it shipped and I need it before Monday."
     });
 
 ChatResponse summary = await chatClient.GetResponseAsync(prompt.ToChatMessages(), new ChatOptions { Tools = [.. tools] });

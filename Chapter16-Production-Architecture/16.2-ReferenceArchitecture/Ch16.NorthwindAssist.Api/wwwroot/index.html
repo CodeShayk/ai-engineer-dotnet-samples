@@ -108,7 +108,7 @@
           const type = (raw.match(/^event: ?(.*)$/m) ?? [])[1] ?? 'message';
           const data = raw.split('\n').filter(l => l.startsWith('data:')).map(l => l.slice(5).replace(/^ /, '')).join('\n');
           if (type === 'delta') reply.textContent += data;
-          else if (type === 'final') reply.textContent = data;     // The sanitized reply replaces the stream.
+          else if (type === 'final') reply.innerHTML = data;       // Safe HTML built by the server from the sanitized reply.
           else if (type === 'approval') line('system', 'Waiting for supervisor approval: ' + JSON.parse(data).ToolName);
           else if (type === 'error') line('error', data);
           else if (type === 'done') conversationId = JSON.parse(data).conversationId;
@@ -138,7 +138,10 @@
               method: 'POST', headers: headers(), body: JSON.stringify({ approved, reason: approved ? null : 'Declined in the demo' })
             });
             const result = await r.json();
-            if (item.conversationId === conversationId) line('system', `Supervisor ${approved ? 'approved' : 'declined'}. ${result.reply ?? ''}`);
+            if (item.conversationId === conversationId) {
+              line('system', `Supervisor ${approved ? 'approved' : 'declined'}.`);
+              if (result.reply) line('assistant', '').innerHTML = result.reply;   // Safe HTML built by the server.
+            }
             refreshApprovals();
           };
           div.append(b, ' ');

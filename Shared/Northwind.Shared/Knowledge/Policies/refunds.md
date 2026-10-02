@@ -16,7 +16,7 @@ Refunds are paid to your original payment method. If you paid with a Northwind g
 
 You will receive a full refund to your original payment method within 5 to 10 business days of the return arriving at our warehouse. Your bank may take a few additional days to show the refund on your statement.
 
-Refunds for orders cancelled before dispatch are issued within 3 to 5 business days of the cancellation.
+Refunds for orders canceled before dispatch are issued within 3 to 5 business days of the cancellation.
 
 ## What is refunded
 

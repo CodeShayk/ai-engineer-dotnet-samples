@@ -7,7 +7,8 @@ namespace Ch16.NorthwindAssist.Api.ModelAccess;
 
 /// <summary>
 /// The model access layer (Chapter 16.2): every model call passes through redaction, telemetry,
-/// a fallback between deployments and a resilience pipeline per deployment.
+/// a fallback between deployments and a resilience pipeline per deployment. Clients behind a
+/// pipeline are created with sdkRetries: false, so the pipeline is the only place that retries.
 /// </summary>
 public static class ModelAccessExtensions
 {
@@ -27,7 +28,7 @@ public static class ModelAccessExtensions
         // A smaller model for routing-style work such as query rewriting and reranking.
         services
             .AddKeyedChatClient("small", sp => new ResilientChatClient(
-                AIClientFactory.CreateChatClient(aiOptions, aiOptions.SmallChatDeployment), ModelResilience.CreatePipeline()))
+                AIClientFactory.CreateChatClient(aiOptions, aiOptions.SmallChatDeployment, sdkRetries: false), ModelResilience.CreatePipeline()))
             .UseOpenTelemetry(sourceName: "Northwind.AI");
 
         services
@@ -46,7 +47,7 @@ public static class ModelAccessExtensions
     {
         var deployments = new List<IChatClient>
         {
-            new ResilientChatClient(AIClientFactory.CreateChatClient(aiOptions), ModelResilience.CreatePipeline())
+            new ResilientChatClient(AIClientFactory.CreateChatClient(aiOptions, sdkRetries: false), ModelResilience.CreatePipeline())
         };
 
         string? fallbackDeployment = configuration["AI:Fallback:ChatDeployment"];
@@ -58,7 +59,7 @@ public static class ModelAccessExtensions
                 ChatDeployment = fallbackDeployment
             };
 
-            deployments.Add(new ResilientChatClient(AIClientFactory.CreateChatClient(fallback), ModelResilience.CreatePipeline()));
+            deployments.Add(new ResilientChatClient(AIClientFactory.CreateChatClient(fallback, sdkRetries: false), ModelResilience.CreatePipeline()));
         }
 
         return deployments.Count == 1

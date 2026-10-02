@@ -22,7 +22,15 @@ dotnet user-secrets set "AI:Endpoint" "https://<your-resource>.openai.azure.com/
 dotnet user-secrets set "AI:ChatDeployment" "gpt-5-mini" --id northwind-ai-engineer-samples
 ```
 
-This project is deliberately self-contained. It creates its client inline, exactly as the listing in Section 1.6 does, so it has no dependency on the shared project and supports only Ollama and Azure OpenAI. From Chapter 2 onward, the samples use the shared `AIClientFactory` from `Shared/Northwind.Shared`, which also supports OpenAI and is explained in Chapter 4. See the root [README](../README.md#configuration) for every setting.
+To use OpenAI directly, set an API key instead of an endpoint:
+
+```bash
+dotnet user-secrets set "AI:Provider" "OpenAI" --id northwind-ai-engineer-samples
+dotnet user-secrets set "AI:ApiKey" "<your OpenAI API key>" --id northwind-ai-engineer-samples
+dotnet user-secrets set "AI:ChatDeployment" "gpt-5-mini" --id northwind-ai-engineer-samples
+```
+
+This project is deliberately self-contained. It creates its client inline, exactly as the listing in Section 1.6 does, so it has no dependency on the shared project. From Chapter 2 onward, the samples use the shared `AIClientFactory` from `Shared/Northwind.Shared`, which supports the same three providers and is explained in Chapter 4. See the root [README](../README.md#configuration) for every setting.
 
 ## If it fails
 
@@ -31,4 +39,5 @@ This project is deliberately self-contained. It creates its client inline, exact
 | `Connection refused` on port 11434 | Ollama is not running. Start it, then run `ollama pull llama3.2`. |
 | `model "llama3.2" not found` | Run `ollama pull llama3.2`. |
 | `401` or `403` from Azure OpenAI | Run `az login`, and check that your account has the *Cognitive Services OpenAI User* role on the resource. |
+| `401` from OpenAI | Check `AI:ApiKey`, and that the key's project can use the model you configured. |
 | `404` from Azure OpenAI | `AI:ChatDeployment` must be your deployment name, not the model name, if the two differ. |

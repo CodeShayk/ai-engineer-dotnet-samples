@@ -50,7 +50,7 @@ builder.Services.AddOpenTelemetry()
         }
     })
     .WithMetrics(metrics => metrics
-        .AddMeter("Northwind.AI")             // Token usage and operation duration
+        .AddMeter("Northwind.AI")             // Token usage, duration and time to first chunk
         .AddMeter("Northwind.Agents")
         .AddMeter("Northwind.Assistant")      // Behavioral metrics
         .AddMeter("Northwind.Cost")           // Estimated cost and time to first token

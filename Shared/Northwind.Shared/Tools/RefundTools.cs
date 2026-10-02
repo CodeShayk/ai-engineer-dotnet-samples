@@ -44,7 +44,9 @@ public sealed class RefundTools(
     public RefundRequestResult RequestRefund(
         [Description("The order number, in the format NW-#####.")] string orderNumber,
         [Description("The product ID of the item to refund, for example P05.")] string productId,
-        [Description("The customer's reason for the refund.")] RefundReason reason)
+        [Description("The customer's reason for the refund.")] RefundReason reason,
+        [Description("True if the customer has opened or used the item. Leave it true unless the customer says the " +
+                     "item is unopened; the support agent who approves the request checks its condition.")] bool opened = true)
     {
         Order? order = store.FindOrder(orderNumber.Trim().ToUpperInvariant());
 
@@ -62,7 +64,7 @@ public sealed class RefundTools(
 
         // Business rules are enforced in code, whatever the model believes. Damaged or faulty
         // items are refundable outside the usual rules, but only once they have been delivered.
-        ReturnEligibility eligibility = returnRules.Evaluate(order, productId, opened: true, DateOnly.FromDateTime(DateTime.Today));
+        ReturnEligibility eligibility = returnRules.Evaluate(order, productId, opened, DateOnly.FromDateTime(DateTime.Today));
         bool damagedAfterDelivery = reason == RefundReason.DamagedOrFaulty && order.Status == OrderStatus.Delivered;
         if (!eligibility.Eligible && !damagedAfterDelivery)
         {

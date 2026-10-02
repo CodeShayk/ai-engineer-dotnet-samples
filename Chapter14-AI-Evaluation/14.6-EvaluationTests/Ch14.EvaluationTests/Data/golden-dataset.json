@@ -4,10 +4,10 @@
     "category": "returns",
     "question": "I opened my earbuds ten days ago and they hurt my ears. Can I return them, and will I have to pay anything?",
     "customerRegion": "uk",
-    "referenceAnswer": "Yes. Opened electronics can be returned within 14 days of delivery if all accessories and packaging are included. There is no restocking fee, and the refund goes to the original payment method within 5 to 10 business days of the return arriving.",
-    "requiredFacts": ["14 days"],
+    "referenceAnswer": "Yes. Opened electronics can be returned within 14 days of delivery if all accessories and packaging are included, and there is no restocking fee. Because the earbuds are not faulty, the cost of the return label is deducted from the refund, which goes to the original payment method within 5 to 10 business days of the return arriving.",
+    "requiredFacts": ["14 days", "label"],
     "forbiddenContent": ["restocking fee of", "60 days"],
-    "relevantDocuments": ["electronics-returns", "refunds"],
+    "relevantDocuments": ["electronics-returns", "returns-policy", "refunds"],
     "tags": ["returns", "electronics", "refunds"]
   },
   {
